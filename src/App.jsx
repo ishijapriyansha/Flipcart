@@ -12,7 +12,7 @@ function App() {
     <>
      <BrowserRouter>
       <Navbar/>
-      <div className='mt-20'>
+      <div className='mt-16'>
       <Routes>
         <Route path="/" element={<Products/>}/>
         <Route path="/register" element={<Signup />} />

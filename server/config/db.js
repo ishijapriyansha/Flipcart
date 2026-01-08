@@ -8,3 +8,5 @@ catch(error){
     console.log("Error while connecting", error)
 }
 }
+
+export default callDB;
