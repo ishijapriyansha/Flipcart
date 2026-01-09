@@ -1,5 +1,5 @@
 export async function handleSignup(email, password){
-    const res=await fetch('/register', {
+    const res=await fetch('http://localhost:3000/register', {
         method:'POST',
         headers:{
             "Content-type":"application/json"
@@ -8,6 +8,11 @@ export async function handleSignup(email, password){
     })
 
     const data= await res.text();
+    
+    if(!res.ok){
+        throw new Error(data || 'Signup failed');
+    }
+    
     return data;
 }
 

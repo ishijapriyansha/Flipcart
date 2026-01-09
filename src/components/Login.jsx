@@ -1,9 +1,22 @@
-import React from "react";
 import { handleLogin } from "../services/authService";
-import Signup from "./Signup";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useState } from "react";
 
 export default function Login() {
+  async function onLoginSubmit(e){
+    e.preventDefault();
+    try{
+    await handleLogin(loginEmail, loginPassword)
+      
+    }
+    catch(err){
+      console.log(err)
+    }
+
+    
+  }
+  const [loginEmail, setloginEmail]=useState("")
+  const [loginPassword, setloginPassword]=useState("")
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -25,7 +38,7 @@ export default function Login() {
               Log in to your account
             </h1>
 
-            <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
+            <form className="space-y-4 md:space-y-6" onSubmit={onLoginSubmit}>
               
               <div>
                 <label
@@ -39,8 +52,9 @@ export default function Login() {
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="name@company.com"
-                  required
+                  value={loginEmail}
+                  placeholder="name@company.com" required
+                  onChange={(e)=>setloginEmail(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 />
               </div>
@@ -56,6 +70,8 @@ export default function Login() {
                 <input
                   type="password"
                   name="password"
+                  value={loginPassword}
+                  onChange={(e)=>{setloginPassword(e.target.value)}}
                   id="password"
                   placeholder="••••••••"
                   required
