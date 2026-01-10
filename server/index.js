@@ -5,13 +5,18 @@ import callDB from "./config/db.js"
 import userModel from "./models/User.js"
 import cors from "cors"
 import jwt from 'jsonwebtoken';
+import cookieParser from "cookie-parser"
 const secretkey="ishija$3"
 
 
 const app = express()
 const port = 3000
 
-app.use(cors());
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true
+}));
+app.use(cookieParser());
 app.use(express.json())
 
 callDB();
@@ -57,9 +62,11 @@ app.post('/login', async (req, res)=>{
     const hashPass=lookEmail.password;
     const comparePass=await bcrypt.compare(loginPassword, hashPass)
     if(comparePass){
-      const token=await jwt.sign({email:loginEmail}, secretkey,{expiresIn:'1hr'})
+      const token= jwt.sign({email:loginEmail}, secretkey,{expiresIn:'1h'})
       
-      return res.cookie("token", token,{expires: "1hr", sameSite:"None"})
+      res.cookie("token", token,{httpOnly:true, secure:false, sameSite:"lax"})
+      return res.status(200).send("Login Successful")
+      
     }
     else return res.status(401).send("Invalid credentials")
   }
@@ -68,6 +75,13 @@ app.post('/login', async (req, res)=>{
     return res.status(500).send("Internal Server Error")
   }
 })
+
+app.post('/logout', async (req, res)=>{
+  res.clearCookie("token", { httpOnly:true, secure:false, sameSite:"lax"})
+  return res.status(200).send("User Logged out")
+})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
