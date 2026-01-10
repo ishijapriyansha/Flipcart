@@ -8,7 +8,6 @@ import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser"
 const secretkey="ishija$3"
 
-
 const app = express()
 const port = 3000
 
@@ -81,8 +80,9 @@ app.post('/logout', async (req, res)=>{
   return res.status(200).send("User Logged out")
 })
 
-
-
+app.get('/profile', async (req, res)=>{
+  return res.send("Protected route")
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
