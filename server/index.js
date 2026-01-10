@@ -7,6 +7,7 @@ import cors from "cors"
 import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser"
 const secretkey="ishija$3"
+import authMiddleware from "./middleware/middleware.js"
 
 const app = express()
 const port = 3000
@@ -80,7 +81,7 @@ app.post('/logout', async (req, res)=>{
   return res.status(200).send("User Logged out")
 })
 
-app.get('/profile', async (req, res)=>{
+app.get('/profile', authMiddleware, async (req, res)=>{
   return res.send("Protected route")
 })
 app.listen(port, () => {

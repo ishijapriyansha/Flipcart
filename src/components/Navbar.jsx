@@ -1,6 +1,21 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 export default function Navbar() {
+  const navigate= useNavigate();
+  async function handleClick(e){
+    e.preventDefault();
+    try{
+      await fetch("http://localhost:3000/logout", {
+        method:'POST',
+        credentials:"include"
+      })
+      alert("Logout successful")
+      navigate('/login')
+    }
+    catch(err){
+      alert("Logout unsuccessful", err)
+    }
+  }
   return (
     
 
@@ -11,9 +26,9 @@ export default function Navbar() {
       <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">Flowbite</span>
   </a>
   <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-      <button type="button" className="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-        <span className="sr-only">Open user menu</span>
-        <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="user photo"/>
+      <button type="button" className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-secondary-soft ring-2 ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span className="sr-only">user</span>
+        <img className="w-8 h-8 rounded-full" src="https://i.pravatar.cc/40" alt="user photo"/>
       </button>
   
       <div className="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44" id="user-dropdown">
@@ -21,20 +36,7 @@ export default function Navbar() {
           <span className="block text-heading font-medium">Joseph McFall</span>
           <span className="block text-body truncate">name@flowbite.com</span>
         </div>
-        <ul className="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
-          <li>
-            <a href="#" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</a>
-          </li>
-          <li>
-            <a href="#" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
-          </li>
-          <li>
-            <a href="#" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Earnings</a>
-          </li>
-          <li>
-            <a href="#" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
-          </li>
-        </ul>
+
       </div>
       <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-user" aria-expanded="false">
         <span className="sr-only">Open main menu</span>
@@ -44,7 +46,7 @@ export default function Navbar() {
   <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
       <li>
-        <a href="#" className="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
+        <a href="#" className="block py-2 px-3 text-black bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
       </li>
       <li>
         <a href="#" className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">About</a>
@@ -53,10 +55,10 @@ export default function Navbar() {
         <a href="#" className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Services</a>
       </li>
       <li>
-        <a href="#" className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Pricing</a>
+        <a href="#" className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
       </li>
       <li>
-        <a href="#" className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
+        <button onClick={handleClick} className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Logout</button>
       </li>
     </ul>
   </div>
