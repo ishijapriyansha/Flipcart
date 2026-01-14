@@ -1,6 +1,5 @@
 import express from "express"
 import bcrypt from "bcrypt"
-import mongoose from "mongoose"
 import callDB from "./config/db.js"
 import userModel from "./models/User.js"
 import cors from "cors"
@@ -84,6 +83,13 @@ app.post('/logout', async (req, res)=>{
 app.get('/profile', authMiddleware, async (req, res)=>{
   return res.send("Protected route")
 })
+
+// app.get('/product/:id', authMiddleware, async (req, res)=>{
+//   const data = await fetch("https://dummyjson.com/products/id")
+//   data=data.json()
+//   res.send(data)
+
+// })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
